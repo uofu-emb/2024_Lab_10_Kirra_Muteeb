@@ -13,9 +13,6 @@
 #include "pico/multicore.h"
 #include "pico/cyw43_arch.h"
 
-int count = 0;
-bool on = false;
-
 // This goes to the GP1 pin on the pico
 #define OUT_PIN 1
 
@@ -25,11 +22,12 @@ bool on = false;
 #define BLINK_TASK_STACK_SIZE configMINIMAL_STACK_SIZE
 
 /**
- * # 1Use sleep_ms to delay iterations
+ * # 1 Use sleep_ms to delay iterations
  */
 void blink_sleep_task(__unused void *params)
 {
-    hard_assert(cyw43_arch_init() == PICO_OK);
+    int count = 0;
+    bool on = false;
 
     // Initialize out pin
     gpio_init(OUT_PIN);
@@ -42,6 +40,7 @@ void blink_sleep_task(__unused void *params)
 
         if (count++ % 11)
             on = !on;
+
         sleep_ms(1000);
     }
 }
@@ -51,7 +50,8 @@ void blink_sleep_task(__unused void *params)
  */
 void blink_thread_task(__unused void *params)
 {
-    hard_assert(cyw43_arch_init() == PICO_OK);
+    int count = 0;
+    bool on = false;
 
     // Initialize out pin
     gpio_init(OUT_PIN);
@@ -64,6 +64,7 @@ void blink_thread_task(__unused void *params)
 
         if (count++ % 11)
             on = !on;
+
         vTaskDelay(500);
     }
 }
@@ -90,12 +91,18 @@ void blink_busy(__unused void *params)
 int main(void)
 {
     stdio_init_all();
-    const char *rtos_name;
-    rtos_name = "FreeRTOS";
-    TaskHandle_t task;
-    // blink_sleep_task();
-    xTaskCreate(blink_thread_task, "MainThread",
-                BLINK_TASK_STACK_SIZE, NULL, BLINK_TASK_PRIORITY, &task);
-    vTaskStartScheduler();
+    hard_assert(cyw43_arch_init() == PICO_OK);
+
+    // Activity 1
+    // blink_sleep_task(NULL);
+
+    // Activity 2
+    // TaskHandle_t task;
+    // xTaskCreate(blink_thread_task, "MainThread",
+    //             BLINK_TASK_STACK_SIZE, NULL, BLINK_TASK_PRIORITY, &task);
+    // vTaskStartScheduler();
+
+    // Activity 3
+    blink_busy(NULL);
     return 0;
 }
