@@ -1,10 +1,6 @@
-# Renode setup
-The Raspberry Pico needs configuration files for Renode to work properly.
+# Activity 3
+Used a 1k resistor with green LED. Set the power supply to 5V (limited amps to 0.7, 3.3V also worked) and got blinking functionality from
+the board. Set up board as follows: power connected to VSYS and Output pin set to GP1 on the board.
 
-* On MacOS, the installation location is `/Applications/Renode.app/Contents/MacOs`
-* On Linux, the location for Debian, Fedora, and Arch is `/opt/renode`
-* On Windows, the location is `C://Program Files/Renode`
-
-To add the Pico configuration files:
-1. Copy `rp2040_spinlock.py` and `rp2040_divider.py` to the `scripts/pydev` directory of your Renode installation.
-1. Copy `rpi_pico_rp2040_w.repl` to the `platforms/cpus` directory.
+# Activity 3 Measurments
+0.020A = 20mA measured on the board with 5V input to VSYS.
