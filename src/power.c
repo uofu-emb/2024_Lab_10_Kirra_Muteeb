@@ -103,6 +103,9 @@ int main(void)
     // vTaskStartScheduler();
 
     // Activity 3
+    printf("Starting in 10 seconds...");
+    sleep_ms(10 * 1000);
+    printf("Run!\n");
     blink_busy(NULL);
     return 0;
 }

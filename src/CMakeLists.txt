@@ -3,6 +3,24 @@ add_executable(power
     power.c
 )
 
+add_executable(hello_sleep_alarm
+    hello_sleep_alarm.c
+)
+
+target_link_libraries(hello_sleep_alarm
+    pico_stdlib
+    hardware_sleep
+)
+
+add_executable(hello_dormant_gpio
+    hello_dormant_gpio.c
+)
+
+target_link_libraries(hello_dormant_gpio
+    pico_stdlib
+    hardware_sleep
+)
+
 pico_set_program_name(power "test")
 pico_set_program_version(power "0.1")
 
@@ -30,5 +48,7 @@ endif()
 
 # Another pico macro which generates the uf2 file in addition to the elf
 pico_add_extra_outputs(power)
+pico_add_extra_outputs(hello_sleep_alarm)
+pico_add_extra_outputs(hello_dormant_gpio)
 
 add_custom_target(flash picotool load -f $<TARGET_FILE:power> DEPENDS power)
